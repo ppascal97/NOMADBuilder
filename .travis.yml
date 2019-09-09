@@ -1,0 +1,39 @@
+language: julia
+os:
+  - linux
+julia:
+  - 1.0
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+    - downloads
+env:
+  global:
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=false
+sudo: required
+
+# Before anything else, get the latest versions of things
+before_script:
+  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
+
+script:
+  - julia build_tarballs.jl
+
+
+deploy:
+    provider: releases
+    api_key:
+        # Note; this api_key is only valid for ppascal97/NOMADBuilder; you need
+        # to make your own: https://docs.travis-ci.com/user/deployment/releases/
+        secure: EmSbptsMx8DpLdg4md6+679kMQ6+dU2EkXCs9xU52twkdEdO32FQGyFV/iNpzUWzcCX63eeRH93prxMvze5DwxeSSFLhhe/b32kOhBxbc/mHdhlP4ETzJc9qfSfuswdCSiFpm6lST0s+Bu1B/FifDewSSEd7sSXit0VFo8vTf+ZAAXjL6KJQP1IKzWnWZ6NCtdtUdDRQqu97LPFJXWBJOruOllOa5n0E/NOeVz+7Vb8kHDyGsz+PDJKU5HWyeHYO36br/FMtv1XNnvPfRQjQMDFvQCzT7mnjd4Ecm2OQcqSjAlxBoOf3ifTysKILmmPnBCPh1hox0zOE812TQ2/oElqNlSZdKMtDegU8DhQkC+UlfDHKV4QjXY5UedAF0cgptXAS2huEfNXKB/nFEYy6OYGsV5Da7ssfQgSNxVtCR5WhcHg8K3LDZaTZk6HckdsVgUj32ZFIqpuGoHkPgeD2mrwwgbuDr7qZANDmKqFxS/+k0KfkCP3vq7rJ040k1EgzNK/hgZ2APXcGnWVpDsXx4SAYFYZwqEpdwweP4oebD8Sr/AnlDcTZLLMXAb9KQ63us0RSbN4CrFbtAeo6KszjiW5rVQK4KWb2pA1gE3Mkc3YSCodLmAJv89UP0XdLxfz/l7AohqkTaNarxob97LaeZkdrRY4GjNEYDYifPCebtCI=
+    file_glob: true
+    file: products/*
+    skip_cleanup: true
+    on:
+        repo: ppascal97/NOMADBuilder
+        tags: true
