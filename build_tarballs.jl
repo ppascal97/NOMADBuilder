@@ -45,11 +45,12 @@ platforms = [
     Linux(:x86_64, libc=:glibc),
     Linux(:aarch64, libc=:glibc),
     Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
-    Linux(:powerpc64le, libc=:glibc)
+    Linux(:powerpc64le, libc=:glibc),
+    MacOS(:x86_64)
 ]
 
 # The products that we will ensure are always built
-products(prefix) = Array{P<:Product,1}()
+products(prefix) = Array{Product,1}()
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
