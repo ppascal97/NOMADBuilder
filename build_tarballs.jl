@@ -49,7 +49,7 @@ platforms = [
 ]
 
 # The products that we will ensure are always built
-products(prefix) = []
+products(prefix) = Array{P<:Product,1}()
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
