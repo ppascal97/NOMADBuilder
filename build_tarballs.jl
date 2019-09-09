@@ -26,6 +26,10 @@ rm -rf examples
 rm -rf lib
 rm -rf utils
 rm -rf tools
+rm -rf ext/bin
+rm -rf ext/example
+rm -rf ext/matlab_server
+rm -rf ext/user_guide
 cd builds/release/lib
 rm libsgtelib.so
 ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
