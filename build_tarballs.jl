@@ -20,6 +20,15 @@ export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
 ./configure
 make
+rm -rf doc
+rm -rf bin
+rm -rf examples
+rm -rf lib
+rm -rf utils
+rm -rf tools
+cd builds/release/lib
+rm libsgtelib.so
+ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
 cp -rf ${NOMAD_HOME} ${prefix}
 exit
 
