@@ -14,29 +14,25 @@ sources = [
 
 # Bash recipe for building across all platforms
 script = raw"""
-cd $WORKSPACE/srcdir
 export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 cd $NOMAD_HOME
-if [[ $target = "x86_64-apple-darwin14" ]]
-then
-   ./configure --compiler=g++
-else
+if [[ $target != "x86_64-apple-darwin14" ]]
    ./configure
+    make
+    rm -rf doc
+    rm -rf bin
+    rm -rf examples
+    rm -rf lib
+    rm -rf utils
+    rm -rf tools
+    rm -rf ext/sgtelib/bin
+    rm -rf ext/sgtelib/example
+    rm -rf ext/sgtelib/matlab_server
+    rm -rf ext/sgtelib/user_guide
+    cd builds/release/lib
+    rm libsgtelib.so
+    ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
 fi
-make
-rm -rf doc
-rm -rf bin
-rm -rf examples
-rm -rf lib
-rm -rf utils
-rm -rf tools
-rm -rf ext/sgtelib/bin
-rm -rf ext/sgtelib/example
-rm -rf ext/sgtelib/matlab_server
-rm -rf ext/sgtelib/user_guide
-cd builds/release/lib
-rm libsgtelib.so
-ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
 cp -rf ${NOMAD_HOME} ${prefix}
 exit
 
