@@ -16,9 +16,13 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir
 export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
-export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
-./configure
+if [ $target = "x86_64-apple-darwin14" ]
+then
+   ./configure -compiler=clang
+else
+   ./configure
+fi
 make
 rm -rf doc
 rm -rf bin
