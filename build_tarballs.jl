@@ -19,7 +19,7 @@ export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 cd $NOMAD_HOME
 if [[ $target = "x86_64-apple-darwin14" ]]
 then
-   ./configure --compiler=$CXX
+   ./configure --compiler=g++
 else
    ./configure
 fi
