@@ -9,11 +9,14 @@ version = v"1.0.0"
 sources = [
     "https://www.gerad.ca/nomad/Downloads/unix_linux/NOMAD.zip" =>
     "2134e64d5c8728054a797d0067eb49083d66ca64ed8ad7e75c34700b528aeff3",
+
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
+cd $WORKSPACE/srcdir
 export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
+export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
 ./configure
 make
@@ -23,16 +26,11 @@ rm -rf examples
 rm -rf lib
 rm -rf utils
 rm -rf tools
-rm -rf ext/sgtelib/bin
-rm -rf ext/sgtelib/example
-rm -rf ext/sgtelib/matlab_server
-rm -rf ext/sgtelib/user_guide
 cd builds/release/lib
 rm libsgtelib.so
 ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
 cp -rf ${NOMAD_HOME} ${prefix}
 exit
-
 """
 
 # These are the platforms we will build for by default, unless further
@@ -42,12 +40,12 @@ platforms = [
     Linux(:x86_64, libc=:glibc),
     Linux(:aarch64, libc=:glibc),
     Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
-    Linux(:powerpc64le, libc=:glibc),
-    #MacOS(:x86_64)
+    Linux(:powerpc64le, libc=:glibc)
 ]
 
 # The products that we will ensure are always built
-products(prefix) =  [    FileProduct(prefix, "Parameters", Symbol("")),
+products(prefix) = [
+    FileProduct(prefix, "Parameters", Symbol("")),
     FileProduct(prefix, "Slave", Symbol("")),
     FileProduct(prefix, "nomad", Symbol("")),
     FileProduct(prefix, "Pareto_Point", Symbol("")),
@@ -123,11 +121,13 @@ products(prefix) =  [    FileProduct(prefix, "Parameters", Symbol("")),
     ExecutableProduct(prefix, "sgtelib", Symbol("")),
     FileProduct(prefix, "Evaluator", Symbol("")),
     FileProduct(prefix, "Random_Pickup", Symbol("")),
-    ExecutableProduct(prefix, "nomad", Symbol(""))]
+    ExecutableProduct(prefix, "nomad", Symbol(""))
+]
 
 # Dependencies that must be installed before this package can be built
-dependencies = [ ]
+dependencies = [
+    
+]
 
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies)
-
