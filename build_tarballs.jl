@@ -14,7 +14,6 @@ sources = [
 
 # Bash recipe for building across all platforms
 script = raw"""
-cd $WORKSPACE/srcdir
 export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
@@ -26,6 +25,10 @@ rm -rf examples
 rm -rf lib
 rm -rf utils
 rm -rf tools
+rm -rf ext/sgtelib/bin
+rm -rf ext/sgtelib/example
+rm -rf ext/sgtelib/matlab_server
+rm -rf ext/sgtelib/user_guide
 cd builds/release/lib
 rm libsgtelib.so
 ln -s ../../../ext/sgtelib/lib/libsgtelib.so libsgtelib.so
