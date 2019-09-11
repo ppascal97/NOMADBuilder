@@ -35,5 +35,5 @@ deploy:
     file: products/*
     skip_cleanup: true
     on:
-        repo: ppascal97/NOMADBuilder
+        repo: ppascal97/NOMADBuilder.jl
         tags: true
