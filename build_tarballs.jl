@@ -22,10 +22,9 @@ find . -type f -exec sed -i 's/isnan/std::isnan/g' {} +
 find . -type f -exec sed -i 's/isinf/std::isinf/g' {} +
 if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; 
 then 
-    ./configure CFLAGS="-I$DESTDIR/include" LDFLAGS="-L$DESTDIR/lib"; 
-else 
-    ./configure; 
+    find . -type f -exec sed -i 's/#ifdef _MSC_VER/#if 1/g' {} +else 
 fi
+./configure
 make
 rm -rf doc
 rm -rf bin
