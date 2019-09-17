@@ -17,12 +17,13 @@ script = raw"""
 export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
-find . -type f -exec sed -i 's/<math.h>/<cmath>/g' {} +
-find . -type f -exec sed -i 's/isnan/std::isnan/g' {} +
-find . -type f -exec sed -i 's/isinf/std::isinf/g' {} +
 if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; 
 then 
     find . -type f -exec sed -i 's/#ifdef _MSC_VER/#if 1/g' {} + ;
+else
+    find . -type f -exec sed -i 's/<math.h>/<cmath>/g' {} + ;
+    find . -type f -exec sed -i 's/isnan/std::isnan/g' {} + ;
+    find . -type f -exec sed -i 's/isinf/std::isinf/g' {} + ;
 fi
 ./configure
 make
