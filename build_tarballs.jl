@@ -18,7 +18,7 @@ export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
 find . -type f -exec sed -i 's/<math.h>/<cmath>/g' {} +
-find . -type f -exec sed -i 's/<time.h>/<sys/time.h>/g' {} +
+find . -type f -exec sed -i 's/<time.h>/<windows.h>/g' {} +
 find . -type f -exec sed -i 's/isnan/std::isnan/g' {} +
 find . -type f -exec sed -i 's/isinf/std::isinf/g' {} +
 ./configure
