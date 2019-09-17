@@ -18,6 +18,7 @@ export NOMAD_HOME=${WORKSPACE}/srcdir/nomad.3.9.1
 export PATH=${NOMAD_HOME}/bin:$PATH
 cd $NOMAD_HOME
 ./configure
+make
 rm -rf doc
 rm -rf bin
 rm -rf examples
